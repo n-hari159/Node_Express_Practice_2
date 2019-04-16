@@ -41,25 +41,45 @@
 
 
 // working with event module
-const EventEmitter = require('events');
-// const emitter = new EventEmitter();
+// const EventEmitter = require('events');
+// // const emitter = new EventEmitter();
 
-//Register a Listener
-// arg/e refer to event
-// emitter.on('messageLogged', (arg) => {
+// //Register a Listener
+// // arg/e refer to event
+// // emitter.on('messageLogged', (arg) => {
+// //     console.log('Listener Called', arg);
+// // });
+
+// // making a noise, produce
+// // Raised an event
+// // The second Argument is Event Argument
+// // emitter.emit('messageLogged', { id: 1, url: 'http://' })
+
+// const Logger = require('./logger');
+// const logger = new Logger();
+
+// logger.on('messageLogged', (arg) => {
 //     console.log('Listener Called', arg);
 // });
 
-// making a noise, produce
-// Raised an event
-// The second Argument is Event Argument
-// emitter.emit('messageLogged', { id: 1, url: 'http://' })
+// logger.log('message');
 
-const Logger = require('./logger');
-const logger = new Logger();
 
-logger.on('messageLogged', (arg) => {
-    console.log('Listener Called', arg);
-});
 
-logger.log('message');
+// working with HTTP module
+// const http = require('http');
+
+// const server = http.createServer( (req, res) => {
+//     if(req.url === '/') {
+//         res.write('Hello World');
+//         res.end();
+//     }
+// }).listen(3000);
+
+// // server.on('connection', (socket) => {
+// //     console.log('New Connection')
+// // });
+
+// // server.listen(3000);
+
+// console.log('Listening on port 3000......');
