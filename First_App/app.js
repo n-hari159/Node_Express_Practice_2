@@ -1,5 +1,12 @@
-const log = require('./logger');
+// const log = require('./logger');
 
-console.log(log);
+// console.log(log);
 
-log('message');
+// log('message');
+
+
+const path = require('path');
+
+var pathObj = path.parse(__filename);
+
+console.log(pathObj);
