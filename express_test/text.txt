@@ -1,0 +1,4 @@
+In index.js the mail.password was coming from preset environment variable app_password by using "export app_password=1234"
+we can set environment variables using "export ENV_vARIABLE = Value"
+
+We store passwords in the environment variables so that they won't be displayed along with the source code

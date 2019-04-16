@@ -1,8 +1,34 @@
+const config = require('config');
+const morgan = require('morgan');
+const helmet = require('helmet');
 const Joi = require('joi');
+const logger = require('./logger');
 const express = require('express');
 const app = express();
 
+// To know the current Environment (Development/Production/Testing/Staging)
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+console.log(`app: ${app.get('env')}`);
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
+app.use(express.static('public'));
+app.use(helmet());
+
+// Configuration
+console.log('Application Name: ' + config.get('name'));
+console.log('Mail Server: ' + config.get('mail.host'));
+console.log('Mail Password: ' + config.get('mail.password'));
+
+
+
+// condition only to use Morgan when the environment is Development mode
+if (app.get('env') === 'development') {
+    app.use(morgan('tiny'));
+    console.log('Morgan enabled');
+}
+
+app.use(logger);
 
 const courses = [
     { id: 1, name: 'course1' },
