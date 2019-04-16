@@ -27,13 +27,39 @@
 
 
 // working with file system module
-const fs = require('fs');
+// const fs = require('fs');
 
-// const files = fs.readdirSync('./');
+// // const files = fs.readdirSync('./');
 
-// console.log(files);
+// // console.log(files);
 
-fs.readdir('./', function(err, files) {
-    if (err) console.log('Error', err);
-    else console.log('Result', files);
+// fs.readdir('./', function(err, files) {
+//     if (err) console.log('Error', err);
+//     else console.log('Result', files);
+// });
+
+
+
+// working with event module
+const EventEmitter = require('events');
+// const emitter = new EventEmitter();
+
+//Register a Listener
+// arg/e refer to event
+// emitter.on('messageLogged', (arg) => {
+//     console.log('Listener Called', arg);
+// });
+
+// making a noise, produce
+// Raised an event
+// The second Argument is Event Argument
+// emitter.emit('messageLogged', { id: 1, url: 'http://' })
+
+const Logger = require('./logger');
+const logger = new Logger();
+
+logger.on('messageLogged', (arg) => {
+    console.log('Listener Called', arg);
 });
+
+logger.log('message');
