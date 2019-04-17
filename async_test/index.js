@@ -1,11 +1,20 @@
 console.log('Before');
-getUser(1, (user) => {
-    getRepositories(user.gitHubUsername, (repo) => {
-        getCommits(repo, (commits) => {
+// Using CallBacks
+// getUser(1, (user) => {
+//     getRepositories(user.gitHubUsername, (repo) => {
+//         getCommits(repo, (commits) => {
 
-        });
-    });
-});
+//         });
+//     });
+// });
+
+// Consuming Promises
+getUser(1)
+    .then(user => getRepositories(user.gitHubUsername))
+    .then(repos => getCommits(repos[0]))
+    .then(commits => console.log('Commits', commits))
+    .catch(err => console.log('Error', err.message));
+
 console.log('After');
 
 function getUser(id) {
