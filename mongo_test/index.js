@@ -34,7 +34,9 @@ async function createCourse() {
 // Querying Documents
 async function getCourses() {
     const courses = await Course
-        .find({ author: 'Hari Nakka', isPublished: true })
+        // .find({ author: 'Hari Nakka', isPublished: true })
+        // .find({ price: { $gt: 10, $lte: 20 } }) // display courses that are gt(greater than) 10$. These are Comparision Query Operators
+        .find({ price: { $in: [10,15,20] } }) // display courses that are 10,15 and 20$
         .limit(10)
         .sort({ name: -1 })
         .select({ name: 1, tags: 1 });
