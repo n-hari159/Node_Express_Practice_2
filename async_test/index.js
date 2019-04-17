@@ -1,4 +1,5 @@
 console.log('Before');
+
 // Using CallBacks
 // getUser(1, (user) => {
 //     getRepositories(user.gitHubUsername, (repo) => {
@@ -8,12 +9,30 @@ console.log('Before');
 //     });
 // });
 
-// Consuming Promises
-getUser(1)
-    .then(user => getRepositories(user.gitHubUsername))
-    .then(repos => getCommits(repos[0]))
-    .then(commits => console.log('Commits', commits))
-    .catch(err => console.log('Error', err.message));
+// Consuming Promises (promise-based approach)
+// getUser(1)
+//     .then(user => getRepositories(user.gitHubUsername))
+//     .then(repos => getCommits(repos[0]))
+//     .then(commits => console.log('Commits', commits))
+//     .catch(err => console.log('Error', err.message));
+
+
+// Async and await approach
+// Try catch block is used to catch errors just like catch in promises based approach
+async function displayCommits(){
+    try {
+        const user = await getUser(1);
+    const repos = await getRepositories(user.gitHubUsername);
+    const commits = await getCommits(repos[0]);
+    console.log(commits);
+    }
+    catch (err) {
+        console.log('Error', err.message);
+    }
+}
+displayCommits();
+
+ 
 
 console.log('After');
 
