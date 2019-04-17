@@ -35,13 +35,20 @@ async function createCourse() {
 async function getCourses() {
     const courses = await Course
         // .find({ author: 'Hari Nakka', isPublished: true })
-        .find()
-        .or([ { author: 'Hari Nakka'}, { isPublished: true } ]) // or and and are Logical Query Operators. It displays courses with author Hari Nakka and courses that are pblished true.
+        
+        // Starts with Hari
+        .find({ author: /^Hari/ }) // Regular Expressions. It displays courses that has author name starting with Hari.
+        // Ends with Nakka
+        .find({ author: /Nakka$/i }) // Courses that have author name ending with Nakka will be displayed and also case insensitive
+        // Contains Hari
+        .find({ author: /.*Hari.*/i })
         .limit(10)
-        .sort({ name: -1 })
+        .sort({ name: 1 })
         .select({ name: 1, tags: 1 });
         // .find({ price: { $gt: 10, $lte: 20 } }) // display courses that are gt(greater than) 10$. These are Comparision Query Operators
         // .find({ price: { $in: [10,15,20] } }) // display courses that are 10,15 and 20$
+        // .find()
+        // .or([ { author: 'Hari Nakka'}, { isPublished: true } ]) // or and and are Logical Query Operators. It displays courses with author Hari Nakka and courses that are pblished true.
     console.log(courses);
 }
 
