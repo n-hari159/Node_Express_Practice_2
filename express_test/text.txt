@@ -2,3 +2,7 @@ In index.js the mail.password was coming from preset environment variable app_pa
 we can set environment variables using "export ENV_vARIABLE = Value"
 
 We store passwords in the environment variables so that they won't be displayed along with the source code
+
+
+In courses.js we changed the routes from '/api/courses' to '/' because we have given in the middleware part of index.js that if anything that start with 'api/courses' search in the courses module
+we use it to make it more efficient
