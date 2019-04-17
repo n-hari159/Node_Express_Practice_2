@@ -14,3 +14,21 @@ const courseSchema = new mongoose.Schema({
     date: { type: Date, default: Date.now },
     isPublished: Boolean
 });
+
+// we need to convert schema to model so that we can create instance of it to add data.
+const Course = mongoose.model('Course', courseSchema);
+
+async function createCourse() {
+    const course = new Course({
+        name: 'Node.js Course',
+        author: 'Hari Nakka',
+        tags: ['node', 'backend'],
+        isPublished: true
+    });
+    
+    
+    const result = await course.save();
+    console.log(result);
+}
+
+createCourse();
