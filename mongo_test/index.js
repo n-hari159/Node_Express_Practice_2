@@ -8,11 +8,32 @@ mongoose.connect('mongodb://localhost/playground')
 
 // Schema for document in MongoDB
 const courseSchema = new mongoose.Schema({
-    name: String,
+    name: { type: String, required: true }, // Implementing Validation at Mongoose level. MongoDB doesn't care about any of these validations.
+    category: {
+        type: String,
+        required: true,
+        enum: ['web','mobile','network']
+    },
     author: String,
-    tags: [ String ],
+    tags: {         // Custom-Validation. It states that every course should have atleast one tag. It shuldn't be empty,null or doesn't exist.
+        type: Array,
+        validate: {
+            isAsync: true,      // Implementing Async Validator 1) => Need to set isAsync to true
+            validator: function(v, callback) {      // 2) => Callback method to be implemented
+                setTimeout(() => {
+                    const result = v && v.length > 0;
+                    callback(result);
+                }, 4000);
+            },
+            message: 'A course should have atleast one tag.'        // optional message
+        }
+    },
     date: { type: Date, default: Date.now },
-    isPublished: Boolean
+    isPublished: Boolean,
+    price: {            // This states that price is required when course is Published i.e., if (isPublished: true) then price is required.
+        type: Number,
+        required: function() { return this.isPublished; } // function returns booleana value.
+    }
 });
 
 // we need to convert schema to model so that we can create instance of it to add data.
@@ -20,15 +41,21 @@ const Course = mongoose.model('Course', courseSchema);
 
 async function createCourse() {
     const course = new Course({
-        name: 'Angular Course',
+        name: 'Angular Course', // If we comment this line now, it will lead to an error which will be catch by the catch block and it will be "Course validation failed: name: Path `name` is required."
+        category: 'web',    // This should be one among the enum in Schema, if not throws an error.
         author: 'Hari Nakka',
         tags: ['angular', 'frontend'],
-        isPublished: true
+        isPublished: true,
+        price: 15
     });
     
-    
-    const result = await course.save();
-    console.log(result);
+    try {
+        const result = await course.save();
+        console.log(result);
+    }
+    catch(err) {
+        console.log(err.message);
+    }
 }
 
 // Querying Documents
@@ -85,8 +112,8 @@ async function removeCourse(id) {
     console.log(result);
 }
 
-removeCourse('5cb79c7d757928ff72e42e37');
+// removeCourse('5cb79c7d757928ff72e42e37');
 
 // getCourses();
 
-// createCourse();
+createCourse();
