@@ -53,8 +53,9 @@ async function createCourse() {
         const result = await course.save();
         console.log(result);
     }
-    catch(err) {
-        console.log(err.message);
+    catch(ex) {
+        for (field in ex.errors)    // Iterate through each and every field of the course object
+            console.log(ex.errors[field].message); // Logs the Validation-Errors of each of them.
     }
 }
 
