@@ -15,9 +15,10 @@ const movies = require('./routes/movies');
 const rentals = require('./routes/rentals');
 const Users = require('./routes/users');
 
-process.on('uncaughtException', (ex) => {
-    console.log('we got an uncaught exception');
-    winston.error(ex.message, ex);
+winston.handleExceptions( new winston.transports.File( { filename: 'uncaughtExceptions.log '}));        // using winston to log
+
+process.on('unhandledRejection', (ex) => {      // using process object to log
+    throw ex;       // winston will automatically caught the unhadled exception and log it(line 18)
 });
 
 winston.add(winston.transports.File, { filename: 'logfile.log' });
