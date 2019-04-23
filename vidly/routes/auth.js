@@ -1,3 +1,4 @@
+const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const {User} = require('../models/user');
@@ -16,7 +17,7 @@ router.post('/', async (req, res) => {
     if (!validPassword) return res.status(400).send('Invalid email or password.');
 
     res.send(true);
-    
+
 });
 
 function validate(req) {
