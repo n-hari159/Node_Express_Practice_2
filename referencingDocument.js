@@ -12,7 +12,7 @@ const Author = mongoose.model('Author', new mongoose.Schema({
 
 const Course = mongoose.model('Course', new mongoose.Schema({
   name: String,
-  author: mongoose.Schema.Types.ObjectId,
+  author: mongoose.Schema.Types.ObjectId, // set author to an objectID
   ref: 'Author'
 }));
 
