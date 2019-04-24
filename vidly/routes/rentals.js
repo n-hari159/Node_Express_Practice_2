@@ -2,9 +2,9 @@ const {Rental, validate} = require('../models/rental');
 const {Movie} = require('../models/movie'); 
 const {Customer} = require('../models/customer'); 
 const mongoose = require('mongoose');
+const Fawn = require('fawn');
 const express = require('express');
 const router = express.Router();
-const Fawn = require('fawn');
 
 Fawn.init(mongoose);
 
@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
   try {
     new Fawn.Task()
       .save('rentals', rental)
-      .update('movies', { _id: movie._id}, {
+      .update('movies', { _id: movie._id }, { 
         $inc: { numberInStock: -1 }
       })
       .run();
@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
     res.send(rental);
   }
   catch(ex) {
-    res.status(500).send('Something Failed.');
+    res.status(500).send('Something failed.');
   }
 });
 
